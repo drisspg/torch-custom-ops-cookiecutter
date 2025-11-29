@@ -1,0 +1,110 @@
+{% if cookiecutter.variant == 'cpp' %}
+[build-system]
+requires = ["scikit-build-core>=0.3.3", "torch >= {{ cookiecutter.min_torch_version }}"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "0.0.1"
+authors = [{ name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" }]
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+requires-python = ">={{ cookiecutter.min_python_version }}"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "torch >= {{ cookiecutter.min_torch_version }}",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "pytest",
+    "ruff",
+]
+
+[tool.scikit-build]
+cmake.verbose = true
+logging.level = "INFO"
+cmake.build-type = "RelWithDebInfo"
+build-dir = "build"
+
+[tool.scikit-build.cmake.define]
+TORCH_CUDA_ARCH_LIST="{{ cookiecutter.cuda_arch }}"
+{% else %}
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{ cookiecutter.project_slug }}"
+authors = [{ name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.email }}" }]
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+dynamic = ["version"]
+requires-python = ">={{ cookiecutter.min_python_version }}"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "torch >= {{ cookiecutter.min_torch_version }}",
+    "triton",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "pytest",
+    "ruff",
+]
+
+[tool.hatch.version]
+source = "vcs"
+{% endif %}
+
+# ---------- RUFF ------------
+[tool.ruff]
+target-version = "py{{ cookiecutter.min_python_version.replace('.', '') }}"
+line-length = 99
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.lint]
+ignore = ["E731"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+

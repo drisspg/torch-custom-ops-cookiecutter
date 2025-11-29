@@ -1,0 +1,17 @@
+{
+    "project_name": "My Custom Ops",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+    "project_description": "torch.compile compatible custom ops",
+    "author": "Your Name",
+    "email": "your.email@example.com",
+    "github_username": "yourusername",
+    "variant": ["cpp", "python"],
+    "cuda_arch": ["9.0", "10.0"],
+    "min_python_version": "3.10",
+    "min_torch_version": "2.7",
+    "_copy_without_render": [
+        "*.cu",
+        "*.h"
+    ]
+}
+
