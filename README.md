@@ -125,6 +125,38 @@ def fn(x):
     return add_one(x)
 ```
 
+## Development
+
+To contribute or test this cookiecutter template:
+
+```bash
+# Clone the repo
+git clone https://github.com/drisspg/torch-custom-ops-cookiecutter.git
+cd torch-custom-ops-cookiecutter
+
+# Install dev dependencies
+pip install -r requirements-dev.txt
+
+# Test template generation (no GPU required)
+pytest tests/ -v
+
+# Generate a test project
+cookiecutter . --no-input variant=python
+```
+
+### Testing Generated Projects
+
+**Note:** Both variants require a CUDA-capable GPU:
+- **Python variant**: Uses Triton, which requires CUDA
+- **C++ variant**: Uses CUDA kernels
+
+On a GPU machine:
+```bash
+cd my_custom_ops
+pip install -e ".[dev]"
+pytest test/ -v
+```
+
 ## References
 
 - [Custom C++ and CUDA Operators](https://docs.pytorch.org/tutorials/advanced/cpp_custom_ops.html)
